@@ -1,0 +1,379 @@
+/* 响应式设计 */
+
+/* 大屏桌面端 (>1200px) */
+@media (min-width: 1200px) {
+    .container {
+        padding: 32px;
+    }
+    
+    .game-header h1 {
+        font-size: 3rem;
+    }
+    
+    :root {
+        --cell-size: 54px;
+    }
+}
+
+/* 中等桌面端 (768px - 1200px) */
+@media (max-width: 1200px) and (min-width: 768px) {
+    .container {
+        padding: 24px;
+    }
+    
+    .game-main {
+        gap: 24px;
+    }
+    
+    .control-panel {
+        width: 260px;
+    }
+    
+    :root {
+        --cell-size: 50px;
+    }
+}
+
+/* 平板端 (768px - 1024px) */
+@media (max-width: 1024px) and (min-width: 768px) {
+    .game-main {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .control-panel {
+        width: 100%;
+        max-width: 500px;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    .number-pad {
+        flex: 1;
+    }
+    
+    .difficulty-selector {
+        flex: 1;
+        margin-left: 20px;
+    }
+    
+    .difficulty-buttons {
+        flex-direction: row;
+        gap: 8px;
+    }
+    
+    .difficulty-btn {
+        flex: 1;
+        text-align: center;
+    }
+}
+
+/* 小平板端和大手机 (480px - 768px) */
+@media (max-width: 768px) {
+    .container {
+        padding: 16px;
+    }
+    
+    .game-header {
+        margin-bottom: 16px;
+        padding: 16px;
+    }
+    
+    .game-header h1 {
+        font-size: 2rem;
+        margin-bottom: 8px;
+    }
+    
+    .game-info {
+        flex-direction: column;
+        gap: 8px;
+        font-size: 1rem;
+    }
+    
+    .game-main {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+    
+    .control-panel {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    .game-controls {
+        margin-top: 16px;
+        padding: 16px;
+    }
+    
+    .control-btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+    
+    :root {
+        --cell-size: 42px;
+    }
+    
+    .number-buttons {
+        gap: 6px;
+    }
+    
+    .number-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
+    }
+    
+    .modal-content {
+        padding: 24px;
+        margin: 16px;
+    }
+    
+    .modal-content h2 {
+        font-size: 1.5rem;
+    }
+    
+    .modal-buttons {
+        flex-direction: column;
+    }
+}
+
+/* 手机端 (320px - 480px) */
+@media (max-width: 480px) {
+    .container {
+        padding: 12px;
+    }
+    
+    .game-header {
+        margin-bottom: 12px;
+        padding: 12px;
+    }
+    
+    .game-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .game-main {
+        gap: 16px;
+    }
+    
+    .control-panel {
+        max-width: 100%;
+    }
+    
+    .game-controls {
+        margin-top: 12px;
+        padding: 12px;
+    }
+    
+    .game-controls {
+        gap: 8px;
+    }
+    
+    .control-btn {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+        flex: 1;
+        min-width: 0;
+    }
+    
+    :root {
+        --cell-size: 36px;
+        --grid-gap: 1px;
+    }
+    
+    .sudoku-grid {
+        padding: 3px;
+    }
+    
+    .sudoku-cell {
+        font-size: 1.2rem;
+    }
+    
+    .number-pad {
+        padding: 16px;
+    }
+    
+    .number-buttons {
+        gap: 4px;
+    }
+    
+    .number-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+    
+    .action-buttons {
+        gap: 6px;
+    }
+    
+    .action-btn {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+    
+    .difficulty-selector {
+        padding: 16px;
+    }
+    
+    .difficulty-buttons {
+        gap: 6px;
+    }
+    
+    .difficulty-btn {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .message {
+        left: 10px;
+        right: 10px;
+        transform: none;
+        font-size: 0.9rem;
+    }
+    
+    .modal-content {
+        padding: 20px;
+        margin: 12px;
+    }
+    
+    .modal-content h2 {
+        font-size: 1.4rem;
+        margin-bottom: 12px;
+    }
+    
+    .modal-content p {
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+    }
+}
+
+/* 超小屏手机 (<320px) */
+@media (max-width: 320px) {
+    .container {
+        padding: 8px;
+    }
+    
+    .game-header h1 {
+        font-size: 1.6rem;
+    }
+    
+    :root {
+        --cell-size: 32px;
+    }
+    
+    .sudoku-cell {
+        font-size: 1.1rem;
+    }
+    
+    .number-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+    
+    .control-btn {
+        padding: 6px 8px;
+        font-size: 0.8rem;
+    }
+}
+
+/* 横屏适配 */
+@media (max-height: 600px) and (orientation: landscape) {
+    .container {
+        padding: 12px;
+    }
+    
+    .game-header {
+        margin-bottom: 12px;
+        padding: 12px;
+    }
+    
+    .game-header h1 {
+        font-size: 1.8rem;
+        margin-bottom: 6px;
+    }
+    
+    .game-info {
+        flex-direction: row;
+        gap: 16px;
+    }
+    
+    .game-main {
+        flex-direction: row;
+        gap: 20px;
+    }
+    
+    .control-panel {
+        width: 200px;
+        max-width: 200px;
+    }
+    
+    .game-controls {
+        margin-top: 12px;
+        padding: 12px;
+    }
+    
+    :root {
+        --cell-size: 38px;
+    }
+    
+    .number-buttons {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
+    }
+    
+    .number-btn {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .difficulty-buttons {
+        flex-direction: column;
+        gap: 4px;
+    }
+    
+    .difficulty-btn {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) and (pointer: coarse) {
+    .sudoku-cell {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .number-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .control-btn {
+        min-height: 44px;
+        padding: 12px 16px;
+    }
+    
+    .action-btn {
+        min-height: 44px;
+    }
+    
+    .difficulty-btn {
+        min-height: 44px;
+    }
+}
+
+/* 高DPI屏幕优化 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .sudoku-grid {
+        border-width: 0.5px;
+    }
+    
+    .sudoku-cell {
+        border-width: 0.5px;
+    }
+}

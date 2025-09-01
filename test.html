@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数独游戏测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        .test-result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(9, 30px);
+            grid-template-rows: repeat(9, 30px);
+            gap: 1px;
+            background: #333;
+            padding: 2px;
+            width: fit-content;
+            margin: 10px 0;
+        }
+        .test-cell {
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>数独游戏功能测试</h1>
+    
+    <div class="test-section">
+        <h2>测试结果</h2>
+        <div id="test-results"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>生成的数独谜题</h2>
+        <div id="generated-puzzle"></div>
+    </div>
+
+    <!-- 引入所需的JavaScript文件 -->
+    <script src="src/utils/sudoku-engine.js"></script>
+    <script src="src/utils/storage-manager.js"></script>
+    
+    <script>
+        // 测试函数
+        function runTests() {
+            const results = document.getElementById('test-results');
+            const puzzleContainer = document.getElementById('generated-puzzle');
+            
+            try {
+                // 测试1: 创建数独引擎
+                const engine = new SudokuEngine();
+                addTestResult(results, '数独引擎创建', true, '成功创建数独引擎实例');
+                
+                // 测试2: 创建空网格
+                const emptyGrid = engine.createEmptyGrid();
+                const isValidEmptyGrid = emptyGrid.length === 9 && emptyGrid[0].length === 9;
+                addTestResult(results, '创建空网格', isValidEmptyGrid, isValidEmptyGrid ? '9x9空网格创建成功' : '网格尺寸错误');
+                
+                // 测试3: 验证数字放置
+                const testGrid = engine.createEmptyGrid();
+                const isValid1 = engine.isValidMove(testGrid, 0, 0, 1);
+                addTestResult(results, '数字验证 - 空网格', isValid1, isValid1 ? '在空网格中放置数字1有效' : '验证失败');
+                
+                testGrid[0][0] = 1;
+                const isValid2 = !engine.isValidMove(testGrid, 0, 1, 1);
+                addTestResult(results, '数字验证 - 行冲突', isValid2, isValid2 ? '正确检测到行冲突' : '未检测到行冲突');
+                
+                // 测试4: 生成完整数独
+                const completeSudoku = engine.generateCompleteSudoku();
+                const isComplete = engine.isComplete(completeSudoku);
+                addTestResult(results, '生成完整数独', isComplete, isComplete ? '成功生成有效的完整数独' : '生成的数独无效');
+                
+                // 测试5: 生成谜题
+                const puzzle = engine.generatePuzzle('easy');
+                const hasPuzzleStructure = puzzle.puzzle && puzzle.solution && puzzle.difficulty;
+                addTestResult(results, '生成谜题', hasPuzzleStructure, hasPuzzleStructure ? '成功生成数独谜题' : '谜题结构不完整');
+                
+                // 显示生成的谜题
+                if (hasPuzzleStructure) {
+                    displayPuzzle(puzzleContainer, puzzle.puzzle, '简单难度谜题');
+                }
+                
+                // 测试6: 存储管理器
+                const storage = new StorageManager();
+                const storageAvailable = storage.isStorageAvailable();
+                addTestResult(results, '存储管理器', true, `存储管理器创建成功，LocalStorage ${storageAvailable ? '可用' : '不可用'}`);
+                
+                // 测试7: 获取提示
+                const hint = engine.getHint(puzzle.puzzle, puzzle.solution);
+                const hasValidHint = hint && typeof hint.row === 'number' && typeof hint.col === 'number' && typeof hint.number === 'number';
+                addTestResult(results, '提示功能', hasValidHint, hasValidHint ? `提示位置: (${hint.row + 1}, ${hint.col + 1}) = ${hint.number}` : '提示功能失败');
+                
+                // 测试8: 冲突检测
+                const conflictGrid = engine.copyGrid(puzzle.puzzle);
+                conflictGrid[0][0] = 1;
+                conflictGrid[0][1] = 1; // 创建冲突
+                const conflicts = engine.getConflicts(conflictGrid);
+                const conflictDetected = conflicts.length > 0;
+                addTestResult(results, '冲突检测', conflictDetected, conflictDetected ? `检测到 ${conflicts.length} 个冲突` : '冲突检测失败');
+                
+                addTestResult(results, '总体测试', true, '所有核心功能测试完成！', 'success');
+                
+            } catch (error) {
+                addTestResult(results, '测试异常', false, `发生错误: ${error.message}`, 'error');
+                console.error('测试错误:', error);
+            }
+        }
+        
+        function addTestResult(container, testName, success, message, type = null) {
+            const div = document.createElement('div');
+            div.className = `test-result ${type || (success ? 'success' : 'error')}`;
+            div.innerHTML = `<strong>${testName}:</strong> ${success ? '✓' : '✗'} ${message}`;
+            container.appendChild(div);
+        }
+        
+        function displayPuzzle(container, grid, title) {
+            const titleDiv = document.createElement('h3');
+            titleDiv.textContent = title;
+            container.appendChild(titleDiv);
+            
+            const gridDiv = document.createElement('div');
+            gridDiv.className = 'test-grid';
+            
+            for (let row = 0; row < 9; row++) {
+                for (let col = 0; col < 9; col++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'test-cell';
+                    cell.textContent = grid[row][col] === 0 ? '' : grid[row][col];
+                    gridDiv.appendChild(cell);
+                }
+            }
+            
+            container.appendChild(gridDiv);
+        }
+        
+        // 运行测试
+        window.addEventListener('load', runTests);
+    </script>
+</body>
+</html>

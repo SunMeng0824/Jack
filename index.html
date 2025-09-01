@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数独小游戏</title>
+    <meta name="description" content="一个基于Web的数独益智游戏，支持多种难度等级">
+    <meta name="keywords" content="数独,游戏,益智,数字,逻辑">
+    <link rel="stylesheet" href="src/styles/main.css">
+    <link rel="stylesheet" href="src/styles/components.css">
+    <link rel="stylesheet" href="src/styles/responsive.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 游戏标题 -->
+        <header class="game-header">
+            <h1>数独小游戏</h1>
+            <div class="game-info">
+                <span class="difficulty-label">难度：<span id="current-difficulty">中等</span></span>
+                <span class="timer-label">时间：<span id="timer">00:00</span></span>
+            </div>
+        </header>
+
+        <!-- 主游戏区域 -->
+        <main class="game-main">
+            <!-- 数独网格 -->
+            <section class="sudoku-board">
+                <div id="sudoku-grid" class="sudoku-grid">
+                    <!-- 9x9 网格将通过JavaScript动态生成 -->
+                </div>
+            </section>
+
+            <!-- 控制面板 -->
+            <aside class="control-panel">
+                <!-- 数字输入板 -->
+                <div class="number-pad">
+                    <div class="number-buttons">
+                        <button class="number-btn" data-number="1">1</button>
+                        <button class="number-btn" data-number="2">2</button>
+                        <button class="number-btn" data-number="3">3</button>
+                        <button class="number-btn" data-number="4">4</button>
+                        <button class="number-btn" data-number="5">5</button>
+                        <button class="number-btn" data-number="6">6</button>
+                        <button class="number-btn" data-number="7">7</button>
+                        <button class="number-btn" data-number="8">8</button>
+                        <button class="number-btn" data-number="9">9</button>
+                    </div>
+                    <div class="action-buttons">
+                        <button id="clear-btn" class="action-btn">清除</button>
+                        <button id="hint-btn" class="action-btn">提示</button>
+                    </div>
+                </div>
+
+                <!-- 难度选择 -->
+                <div class="difficulty-selector">
+                    <h3>选择难度</h3>
+                    <div class="difficulty-buttons">
+                        <button class="difficulty-btn" data-difficulty="easy">简单</button>
+                        <button class="difficulty-btn active" data-difficulty="medium">中等</button>
+                        <button class="difficulty-btn" data-difficulty="hard">困难</button>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- 游戏控制栏 -->
+        <footer class="game-controls">
+            <button id="new-game-btn" class="control-btn primary">新游戏</button>
+            <button id="pause-btn" class="control-btn">暂停</button>
+            <button id="save-btn" class="control-btn">保存</button>
+            <button id="load-btn" class="control-btn">加载</button>
+            <button id="undo-btn" class="control-btn">撤销</button>
+        </footer>
+
+        <!-- 状态消息 -->
+        <div id="message" class="message hidden"></div>
+
+        <!-- 游戏完成对话框 -->
+        <div id="completion-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>恭喜完成！</h2>
+                <p>你成功解决了这个数独！</p>
+                <p>用时：<span id="completion-time"></span></p>
+                <p>提示次数：<span id="hints-used"></span></p>
+                <div class="modal-buttons">
+                    <button id="new-game-modal" class="control-btn primary">再来一局</button>
+                    <button id="close-modal" class="control-btn">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript 文件 -->
+    <script src="src/utils/sudoku-engine.js"></script>
+    <script src="src/utils/storage-manager.js"></script>
+    <script src="src/components/sudoku-grid.js"></script>
+    <script src="src/components/game-controller.js"></script>
+    <script src="src/components/ui-manager.js"></script>
+    <script src="src/app.js"></script>
+</body>
+</html>
